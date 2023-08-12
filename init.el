@@ -68,3 +68,39 @@
 (use-package evil
   :config
   (evil-mode 1))
+
+;; My extra configs
+
+;; scroll line-by-line instead of half page
+(setq scroll-step 1)
+(global-display-line-numbers-mode t)
+(setq display-line-numbers-type 'relative)
+
+;; highline region of last operation
+(use-package evil-goggles
+  :ensure t
+  :config
+  (evil-goggles-mode)
+
+  ;; optionally use diff-mode's faces; as a result, deleted text
+  ;; will be highlighed with `diff-removed` face which is typically
+  ;; some red color (as defined by the color theme)
+  ;; other faces such as `diff-added` will be used for other actions
+  (evil-goggles-use-diff-faces))
+(setq evil-goggles-duration 0.200)
+
+;; Auto fullscreen
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; Copilot
+(add-to-list 'load-path "~/projects/myemacs/copilot.el")
+(use-package copilot
+  :load-path (lambda () (expand-file-name "copilot.el" user-emacs-directory))
+  ;; don't show in mode line
+  :diminish
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+         ("C-TAB" . 'copilot-accept-completion-by-word)
+         ("C-<tab>" . 'copilot-accept-completion-by-word)
+         ("<tab>" . 'copilot-accept-completion)
+         ("TAB" . 'copilot-accept-completion)))
