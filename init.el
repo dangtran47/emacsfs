@@ -195,7 +195,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-    '(counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
+    '(evil-magit magit counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -235,6 +235,19 @@
   (my-leader-def
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
+    "s"  '(:ignore t :which-key "search")
+    "sp" '(counsel-projectile-rg :which-key "search text project")
+    "sd" '(counsel-rg :which-key "search text in directory")
+    "p"  '(:ignore t :which-key "projectile")
+    "pf" '(counsel-projectile-find-file :which-key "find file")
+    "pp" '(counsel-projectile-switch-project :which-key "switch project")
+    "pb" '(counsel-projectile-switch-to-buffer :which-key "switch buffer")
+    "f"  '(:ignore t :which-key "files")
+    "ff" '(counsel-find-file :which-key "find file")
+    "fr" '(counsel-recentf :which-key "recent files")
+    "b"  '(:ignore t :which-key "buffers")
+    "bb" '(counsel-switch-buffer :which-key "switch buffer")
+    "bk" '(kill-current-buffer :which-key "kill buffer")
     )
   )
 
@@ -256,3 +269,8 @@
 
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
+
+(use-package magit
+  :commands (magit-status magit-get-current-branch)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
