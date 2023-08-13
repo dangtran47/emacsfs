@@ -106,7 +106,7 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-ayu-dark t)
+  (load-theme 'doom-oceanic-next t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -125,8 +125,6 @@
   :ensure t
   :init (doom-modeline-mode 1))
 (setq-default mode-line-end-spaces 10)
-
-
 
 ;; My extra configs
 (use-package vterm
