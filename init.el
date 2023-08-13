@@ -9,7 +9,6 @@
 
 ;; (setq visible-bell t)
 (set-face-attribute 'default nil :font "Fira Code" :height 170)
-(load-theme 'tango-dark)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -63,6 +62,18 @@
   :config
   (ivy-mode 1))
 
+(use-package evil
+  :config
+  (evil-mode 1))
+
+(column-number-mode)
+(global-display-line-numbers-mode t)
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+(setq display-line-numbers-type 'relative)
+
 (use-package all-the-icons
   :ensure t)
 (use-package doom-themes
@@ -92,17 +103,11 @@
 (setq-default mode-line-end-spaces 10)
 
 
-(use-package evil
-  :config
-  (evil-mode 1))
 
 ;; My extra configs
 
 ;; scroll line-by-line instead of half page
 (setq scroll-step 1)
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
-
 ;; highline region of last operation
 (use-package evil-goggles
   :ensure t
