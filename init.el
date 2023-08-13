@@ -42,7 +42,9 @@
   :ensure t)
 ;; END: My configs for Copilot
 
-;; Use C-c C-f to refresh ivy
+;; Use C-s to refresh ivy
+(use-package swiper
+  :ensure t)
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper)
