@@ -195,7 +195,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-    '(evil-magit magit counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
+    '(forge evil-magit magit counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -274,3 +274,6 @@
   :commands (magit-status magit-get-current-branch)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+(use-package forge
+  :after magit)

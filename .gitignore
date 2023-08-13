@@ -7,3 +7,5 @@ projectile-bookmarks.eld
 !init.el
 *.gitignore**
 !.gitignore
+projects
+forge-database.sqlite
