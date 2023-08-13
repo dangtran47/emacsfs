@@ -61,6 +61,22 @@
    ("C-d" . ivy-reverse-i-search-kill))
   :config
   (ivy-mode 1))
+(use-package ivy-rich
+  :ensure t
+  :init
+  (ivy-rich-mode 1))
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+   ("C-x b" . counsel-ibuffer)
+   ("C-x C-f" . counsel-find-file)
+   :map minibuffer-local-map
+   ("C-r" . 'counsel-minibuffer-history))
+  :config
+  (setq ivy-initial-inputs-alist nil)) ;; Don't start searches with ^
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package evil
   :config
