@@ -70,6 +70,8 @@
 (global-display-line-numbers-mode t)
 (dolist (mode '(org-mode-hook
                 term-mode-hook
+                shell-mode-hook
+                vterm-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 (setq display-line-numbers-type 'relative)
@@ -105,6 +107,8 @@
 
 
 ;; My extra configs
+(use-package vterm
+    :ensure t)
 
 ;; scroll line-by-line instead of half page
 (setq scroll-step 1)
