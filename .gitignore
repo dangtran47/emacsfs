@@ -4,5 +4,6 @@ elpa
 transient
 projectile-bookmarks.eld
 *init.el**
-..gitignore**
-.gitignore*
+!init.el
+*.gitignore**
+!.gitignore

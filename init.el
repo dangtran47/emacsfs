@@ -195,7 +195,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-    '(projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
+    '(counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -209,6 +209,7 @@
  '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
  '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
 
+(use-package undo-tree)
 (global-undo-tree-mode)
 (evil-set-undo-system 'undo-tree)
 
@@ -252,3 +253,6 @@
   (when (file-directory-p "~/projects")
     (setq projectile-project-search-path '("~/projects")))
   (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
