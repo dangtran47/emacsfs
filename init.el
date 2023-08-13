@@ -159,3 +159,6 @@
  '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
  '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
  '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
+
+(global-undo-tree-mode)
+(evil-set-undo-system 'undo-tree)
