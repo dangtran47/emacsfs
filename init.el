@@ -4,8 +4,9 @@
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (set-fringe-mode 10)
-
 (menu-bar-mode -1)
+
+(setq auth-sources '("~/.authinfo"))
 
 ;; (setq visible-bell t)
 (set-face-attribute 'default nil :font "Fira Code" :height 170)
@@ -133,7 +134,7 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-oceanic-next t)
+  (load-theme 'doom-dracula t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -290,3 +291,7 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+(setq auto-save-list-file-prefix
+      "~/.emacs.d/auto-save-list/.saves-")
+(setq make-backup-files nil)
+(setq undo-tree-auto-save-history nil)
