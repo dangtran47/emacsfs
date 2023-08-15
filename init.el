@@ -36,10 +36,8 @@
   :ensure t
   :config
   (editorconfig-mode 1))
-(use-package dash
-  :ensure t)
-(use-package s
-  :ensure t)
+(use-package dash)
+(use-package s)
 ;; END: My configs for Copilot
 
 ;; Use C-s to refresh ivy
@@ -100,10 +98,13 @@
 
 (use-package evil
   :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
+  (setq evil-want-integration t
+    evil-want-keybinding nil
+    evil-want-C-u-scroll t
+    evil-want-C-i-jump nil
+    evil-start-of-line t
+    evil-undo-system 'undo-tree
+    )
   :hook (evil-mode . my/evil-hook)
   :config
   (evil-mode 1)
@@ -111,8 +112,6 @@
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
   (define-key evil-normal-state-map (kbd "gc") 'comment-line)
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
@@ -164,7 +163,6 @@
 (setq scroll-step 1)
 ;; highline region of last operation
 (use-package evil-goggles
-  :ensure t
   :config
   (evil-goggles-mode)
 
@@ -197,7 +195,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-    '(git-gutter-fringe git-gutter forge evil-magit magit counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
+    '(company-box company typescript-mode lsp-mode git-gutter-fringe git-gutter forge evil-magit magit counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -213,7 +211,6 @@
 
 (use-package undo-tree)
 (global-undo-tree-mode)
-(evil-set-undo-system 'undo-tree)
 
 (use-package helpful
   :custom
@@ -291,6 +288,38 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+(defun efs/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
+
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+         (:map lsp-mode-map
+         ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+
 (setq auto-save-list-file-prefix
       "~/.emacs.d/auto-save-list/.saves-")
 (setq make-backup-files nil)
