@@ -3,9 +3,5 @@ copilot.el
 elpa
 transient
 projectile-bookmarks.eld
-*init.el**
-!init.el
-*.gitignore**
-!.gitignore
 projects
 forge-database.sqlite

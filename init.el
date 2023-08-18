@@ -5,11 +5,14 @@
 (tooltip-mode -1)
 (set-fringe-mode 10)
 (menu-bar-mode -1)
+(setq-default truncate-lines t)
 
 (setq auth-sources '("~/.authinfo"))
 
 ;; (setq visible-bell t)
 (set-face-attribute 'default nil :font "Fira Code" :height 170)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 170)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170 :weight 'regular)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -81,7 +84,7 @@
 (use-package which-key
   :init (which-key-mode)
   :config
-  (setq which-key-idle-delay 0.3))
+  (setq which-key-idle-delay 0.2))
 
 (defun my/evil-hook ()
   (dolist (mode '(custom-mode
@@ -195,7 +198,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-    '(company-box company typescript-mode lsp-mode git-gutter-fringe git-gutter forge evil-magit magit counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
+    '(visual-fill-column org-bullets company-box company typescript-mode lsp-mode git-gutter-fringe git-gutter forge evil-magit magit counsel-projectile projectile evil-collection helpful evil-goggles evil doom-modeline ivy s dash editorconfig)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -324,3 +327,62 @@
       "~/.emacs.d/auto-save-list/.saves-")
 (setq make-backup-files nil)
 (setq undo-tree-auto-save-history nil)
+(setq undo-tree-history-directory-alist '(("." . , "~/projects/myemacs/undo")))
+
+(defun efs/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (copilot-mode 1)
+  )
+
+(defun efs/org-font-setup ()
+  ;; (font-lock-add-keywords 'org-mode
+  ;;   '(("^ *\\([-]\\) "
+  ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (when (facep (car face))  ; Check if the face exists
+        (set-face-attribute (car face) nil
+                            :font "Fira Code"
+                            :weight 'regular
+                            :height (cdr face))))
+
+
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(use-package org
+  :hook (org-mode . efs/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾"
+    org-hide-emphasis-markers t)
+  (efs/org-font-setup))
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+(defun efs/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :defer t
+  :hook (org-mode . efs/org-mode-visual-fill))
