@@ -331,11 +331,10 @@
 
 (defun efs/org-mode-setup ()
   (org-indent-mode)
-  (variable-pitch-mode 1)
+  ;; (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
-  (copilot-mode 1)
-  )
+  (copilot-mode 1))
 
 (defun efs/org-font-setup ()
   ;; (font-lock-add-keywords 'org-mode
